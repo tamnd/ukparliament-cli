@@ -88,7 +88,7 @@ func TestSearchMembers(t *testing.T) {
 						"membershipStatus": map[string]any{
 							"statusDescription": "Current Member",
 						},
-						"membershipFrom": map[string]any{"name": "Leicester East"},
+						"membershipFrom": "Leicester East",
 					},
 				},
 			},
@@ -139,7 +139,7 @@ func TestGetMember(t *testing.T) {
 				"membershipStatus": map[string]any{
 					"statusDescription": "Current Member",
 				},
-				"membershipFrom": map[string]any{"name": ""},
+				"membershipFrom": "",
 			},
 		},
 	}

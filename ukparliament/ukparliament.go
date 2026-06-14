@@ -199,13 +199,11 @@ type wireMember struct {
 		Name string `json:"name"`
 	} `json:"latestParty"`
 	Membership struct {
-		House  int `json:"house"`
-		Status struct {
+		House            int     `json:"house"`
+		MembershipFrom   string  `json:"membershipFrom"` // constituency name (plain string)
+		MembershipStatus *struct {
 			Description string `json:"statusDescription"`
 		} `json:"membershipStatus"`
-		Constituency struct {
-			Name string `json:"name"`
-		} `json:"membershipFrom"`
 	} `json:"latestHouseMembership"`
 }
 
@@ -221,13 +219,17 @@ func houseFromInt(h int) string {
 }
 
 func (w wireMember) toMember() *Member {
+	var status string
+	if w.Membership.MembershipStatus != nil {
+		status = w.Membership.MembershipStatus.Description
+	}
 	return &Member{
 		ID:           w.ID,
 		Name:         w.Name,
 		Party:        w.Party.Name,
 		House:        houseFromInt(w.Membership.House),
-		Status:       w.Membership.Status.Description,
-		Constituency: w.Membership.Constituency.Name,
+		Status:       status,
+		Constituency: w.Membership.MembershipFrom,
 	}
 }
 
